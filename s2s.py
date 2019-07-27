@@ -36,11 +36,12 @@ if os.path.exists('seq2seq_config.json'):
     id2char = {int(i): j for i, j in id2char.items()}
     # id2char =wid
 else:
+    min_count = 32
     chars = {}
-    for a in data:
-        for w in data['content_list']:  # 纯文本，不用分词
+    for index, a in data.iterrows():
+        for w in str(a['content_list']):  # 纯文本，不用分词
             chars[w] = chars.get(w, 0) + 1
-        for w in data['tittle']:  # 纯文本，不用分词
+        for w in str(a['tittle']):  # 纯文本，不用分词
             chars[w] = chars.get(w, 0) + 1
     chars = {i: j for i, j in chars.items() if j >= min_count}
     # 0: mask
